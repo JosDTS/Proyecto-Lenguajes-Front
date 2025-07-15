@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/SearchContext";
 import { useAuth } from "../context/AuthContext";
 import usePaginatedFetch from "../hooks/usePaginatedFetch";
+import SearchBar from "../SearchBar";
+
 import {
   UserCog,
   ArrowBigRight,
@@ -12,10 +14,10 @@ import {
 } from "lucide-react";
 
 const Teachers = () => {
-  const { searchTerm, setSearchTitle } = useContext(SearchContext);
+  const { searchTerm, setSearchTitle,setSearchTerm } = useContext(SearchContext);
   const { token, user } = useAuth();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(() => user?.paginacion);
+  const [pageSize, setPageSize] = useState(() => user?.paginacion ||10);
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -27,7 +29,7 @@ const Teachers = () => {
 
   // Hook personalizado con paginación
   const { data: teachers, totalPages, loading, error } = usePaginatedFetch({
-    url: `${API_URL}api/teacher`,
+    url: `${API_URL}api/teacher?value=${encodeURIComponent(searchTerm)}`,
     token,
     searchTerm,
     page,
