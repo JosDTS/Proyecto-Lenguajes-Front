@@ -23,7 +23,7 @@ const SearchBar = forwardRef(({ searchTitle, searchTerm, setSearchTerm }, ref) =
         <input
           ref={inputRef}
           type="text"
-          placeholder={`Buscar ${searchTitle.toLowerCase()}...`}
+          placeholder={`Buscar ${searchTitle ? searchTitle.toLowerCase() : ""}...`}
           defaultValue={searchTerm}
           className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
