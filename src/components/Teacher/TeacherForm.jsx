@@ -15,34 +15,40 @@ const TeacherForm = () => {
   const { token, institution } = useAuth();
 
   const [formData, setFormData] = useState({
-    nom: "",
-    ape: "",
-    doc: "",
-    correo: "",
+    name: "",
+    phone_number: "",
+    email: "",
   });
+
+
+
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteInput, setDeleteInput] = useState("");
   const API_URL = import.meta.env.VITE_API_URL;
 
-  
+
 
   useEffect(() => {
     if (isEdit) {
-      fetch(`${API_URL}/profesores/${id}`, {
+      fetch(`${API_URL}api/teacher/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
         .then((res) => res.json())
         .then((data) => {
-          
+
           if (!data) {
             setNotFound(true);
             return;
           }
-          setFormData(data);
+          setFormData({
+            name: data.name,
+            phone_number: data.phone_number,
+            email: data.email,
+          });
         })
         .catch((err) => {
           console.error("Error al cargar profesor:", err);
@@ -63,15 +69,15 @@ const TeacherForm = () => {
     e.preventDefault();
 
     const method = isEdit ? "PUT" : "POST";
-    const url = isEdit ? `${API_URL}/profesores/${id}` : API_URL;
+    const url = isEdit ? `${API_URL}api/teacher/${id}` : `${API_URL}api/teacher`;
+    console.log(API_URL)
     const payload = {
-      colegio_id: institution.id, 
-      cedula : formData.doc,
-      nombre : formData.nom,
-      apellidos : formData.ape,
-      correo : formData.correo
+      phone_number: formData.phone_number,
+      name: formData.name,
+      email: formData.email,
+      password: '1234'
     };
-   
+
     try {
       const res = await fetch(url, {
         method,
@@ -116,42 +122,33 @@ const TeacherForm = () => {
   return (
     <div className="max-w-xl mx-auto mt-6">
       <h1 className="text-xl font-semibold text-blue-700 mb-4">
-        {isEdit ? "Editar Profesor" : "Agregar Profesor"}
+        {isEdit ? "Editar Profesor" : "Agregar Profesor"} {formData.name}
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          name="nom"
+          name="name"
           placeholder="Nombre"
-          value={formData.nom}
+          value={formData.name}
           onChange={handleChange}
           required
           className="w-full border rounded-lg p-3"
         />
         <input
           type="text"
-          name="ape"
-          placeholder="Apellidos"
-          value={formData.ape}
-          onChange={handleChange}
-          required
-          className="w-full border rounded-lg p-3"
-        />
-        <input
-          type="text"
-          name="doc"
-          placeholder="Cédula"
-          value={formData.doc}
+          name="phone_number"
+          placeholder="Telefono"
+          value={formData.phone_number}
           onChange={handleChange}
           required
           className="w-full border rounded-lg p-3"
         />
         <input
           type="email"
-          name="correo"
+          name="email"
           placeholder="Correo electrónico"
-          value={formData.correo}
+          value={formData.email}
           onChange={handleChange}
           required
           className="w-full border rounded-lg p-3"
@@ -199,11 +196,10 @@ const TeacherForm = () => {
                     type="button"
                     disabled={deleteInput !== formData.nom}
                     onClick={handleDelete}
-                    className={`px-4 py-2 rounded-lg text-white ${
-                      deleteInput === formData.nom
+                    className={`px-4 py-2 rounded-lg text-white ${deleteInput === formData.nom
                         ? "bg-red-600 hover:bg-red-700"
                         : "bg-gray-300 cursor-not-allowed"
-                    }`}
+                      }`}
                   >
                     Confirmar eliminación
                   </button>

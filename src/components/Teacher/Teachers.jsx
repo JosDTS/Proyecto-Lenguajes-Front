@@ -65,23 +65,31 @@ const Teachers = () => {
           <table className="min-w-full border text-left text-sm border-gray-300">
           <thead className="bg-blue-100 text-gray-700">
             <tr>
-              <th className="px-4 py-2 border border-gray-300 w-2/12">Cédula</th>
-              <th className="px-4 py-2 border border-gray-300 w-6/12">Nombre</th>
-          
-              
+             <th className="px-4 py-2 border border-gray-300 w-2/12">Id</th>
+               <th className="px-4 py-2 border border-gray-300 w-4/12">Correo</th>
+              <th className="px-4 py-2 border border-gray-300 w-4/12">Nombre</th>
+        
               <th className="px-4 py-2 border border-gray-300 w-2/12 text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
             
          
-            {[...Array(pageSize || 10)].map((_, idx) => (
+            {[...Array(pageSize || 4)].map((_, idx) => (
                <tr
                key={idx}
                className={idx % 2 === 0 ? "bg-white" : "bg-gray-100"}
              >
-               <td className="px-4 py-2 border border-gray-300"></td>
-               <td className="px-4 py-2 border border-gray-300"></td>               
+               <td className="px-4 py-2 border border-gray-300 text-gray-600">
+                   
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300 font-medium text-gray-800">
+                   
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300 font-medium text-gray-800">
+                  
+                  </td>   
+        
                <td className="px-4 py-2 border border-gray-300 text-center">
                  <button
                    onClick={() => navigate(`/subjects/edit/`)}
@@ -115,6 +123,7 @@ const Teachers = () => {
         <button
           onClick={() => navigate("/teachers/add")}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+
         >
           <UserPlus />
         </button>
