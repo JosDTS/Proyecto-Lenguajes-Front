@@ -13,8 +13,11 @@ const SearchBar = forwardRef(({ searchTitle, searchTerm, setSearchTerm }, ref) =
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchTerm(inputRef.current.value.trim());
-    inputRef.current.select(); // opcional: seleccionar todo al buscar
+    // Puedes dejarlo para evitar recargar la página o hacer alguna acción extra si quieres
+  };
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   return (
@@ -24,7 +27,8 @@ const SearchBar = forwardRef(({ searchTitle, searchTerm, setSearchTerm }, ref) =
           ref={inputRef}
           type="text"
           placeholder={`Buscar ${searchTitle ? searchTitle.toLowerCase() : ""}...`}
-          defaultValue={searchTerm}
+          value={searchTerm}
+          onChange={handleChange}
           className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <button

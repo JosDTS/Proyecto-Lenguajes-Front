@@ -26,9 +26,16 @@ const Teachers = () => {
     setSearchTitle("Profesores");
   }, [setSearchTitle]);
 
+  // Resetear página a 1 cuando cambie búsqueda
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm]);
+
+  const queryValue = searchTerm ? `?value=${encodeURIComponent(searchTerm)}` : "";
+
   // Hook personalizado con paginación y búsqueda
   const { data: teachers = [], totalPages = 1, loading, error } = usePaginatedFetch({
-    url: `${API_URL}api/teacher?value=${encodeURIComponent(searchTerm)}`,
+    url: `${API_URL}api/teacher${queryValue}`,
     token,
     searchTerm,
     page,
