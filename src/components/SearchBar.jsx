@@ -28,7 +28,7 @@ const SearchBar = forwardRef(({ searchTitle, searchTerm, setSearchTerm }, ref) =
           type="text"
           placeholder={`Buscar ${searchTitle ? searchTitle.toLowerCase() : ""}...`}
           value={searchTerm}
-          onChange={handleChange}
+           onChange={(e) => setSearchTerm(e.target.value)}
           className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <button
